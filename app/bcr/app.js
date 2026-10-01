@@ -42,6 +42,7 @@ class RegistryApp extends App {
 	 * @param {!Promise<!Registry>} registryWithPackages
 	 * @param {!Promise<*>} ruleUsageIndex resolves to Map<urlKey, Array<TargetRef>>.
 	 * @param {function():!Promise<*>} bazelFlagDbLoader memoized lazy loader.
+	 * @param {number} totalBazelFlags number of flags in the bundled database.
 	 * @param {!RefreshController} refreshController
 	 * @param {?dom.DomHelper=} opt_domHelper
 	 */
@@ -51,6 +52,7 @@ class RegistryApp extends App {
 		registryWithPackages,
 		ruleUsageIndex,
 		bazelFlagDbLoader,
+		totalBazelFlags,
 		refreshController,
 		opt_domHelper,
 	) {
@@ -70,6 +72,9 @@ class RegistryApp extends App {
 
 		/** @private @const @type {function():!Promise<*>} */
 		this.bazelFlagDbLoader_ = bazelFlagDbLoader;
+
+		/** @private @const @type {number} */
+		this.totalBazelFlags_ = totalBazelFlags;
 
 		/** @private @const @type {!RefreshController} */
 		this.refreshController_ = refreshController;
@@ -166,6 +171,14 @@ class RegistryApp extends App {
 	 */
 	getBazelFlagDb() {
 		return this.bazelFlagDbLoader_();
+	}
+
+	/**
+	 * @override
+	 * @returns {number}
+	 */
+	getTotalBazelFlags() {
+		return this.totalBazelFlags_;
 	}
 
 	/** @override */

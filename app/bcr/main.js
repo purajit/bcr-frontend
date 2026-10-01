@@ -70,6 +70,7 @@ async function main(registryDataBase64) {
 		registryWithPackages,
 		ruleUsageIndex,
 		getBazelFlagDb,
+		Number(metaUrl("bcr:bazelflag-count")) || 0,
 		refreshController,
 	);
 	app.render(document.body);

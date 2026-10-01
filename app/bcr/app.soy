@@ -326,6 +326,7 @@ import {
   {@param? totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="px-2">
@@ -360,7 +361,7 @@ import {
   <a class="Link--primary d-flex flex-items-center mb-2" href="/bazel/flags">
     <span class="color-fg-muted">Bazel Flags</span>
     <span class="dotted-leader"></span>
-    <span class="text-bold js-bazel-flags-count">914</span>
+    <span class="text-bold">{$totalBazelFlags}</span>
   </a>
 
   <div class="mt-4 pt-3 border-top">
@@ -515,6 +516,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="PageLayout PageLayout--panePos-start PageLayout--hasPaneDivider PageLayout--responsive-stackRegions PageLayout--responsive-panePos-start mt-3">
@@ -530,6 +532,7 @@ import {
         {param totalSymbols: $totalSymbols /}
         {param topPrimaryLanguages: $topPrimaryLanguages /}
         {param totalBazelVersions: $totalBazelVersions /}
+        {param totalBazelFlags: $totalBazelFlags /}
         {param uiCommitSha: $uiCommitSha /}
       {/call}
     </div>
@@ -805,6 +808,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="PageLayout PageLayout--panePos-start PageLayout--hasPaneDivider PageLayout--responsive-stackRegions PageLayout--responsive-panePos-start mt-3">
@@ -820,6 +824,7 @@ import {
         {param totalSymbols: $totalSymbols /}
         {param topPrimaryLanguages: $topPrimaryLanguages /}
         {param totalBazelVersions: $totalBazelVersions /}
+        {param totalBazelFlags: $totalBazelFlags /}
         {param uiCommitSha: $uiCommitSha /}
       {/call}
     </div>
@@ -852,6 +857,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
   {let $commit: $moduleVersion.getCommit() /}
@@ -869,6 +875,7 @@ import {
         {param totalSymbols: $totalSymbols /}
         {param topPrimaryLanguages: $topPrimaryLanguages /}
         {param totalBazelVersions: $totalBazelVersions /}
+        {param totalBazelFlags: $totalBazelFlags /}
         {param uiCommitSha: $uiCommitSha /}
       {/call}
     </div>
@@ -969,6 +976,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="PageLayout PageLayout--panePos-start PageLayout--hasPaneDivider PageLayout--responsive-stackRegions PageLayout--responsive-panePos-start mt-3">
@@ -984,6 +992,7 @@ import {
         {param totalSymbols: $totalSymbols /}
         {param topPrimaryLanguages: $topPrimaryLanguages /}
         {param totalBazelVersions: $totalBazelVersions /}
+        {param totalBazelFlags: $totalBazelFlags /}
         {param uiCommitSha: $uiCommitSha /}
       {/call}
     </div>
@@ -1145,6 +1154,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="PageLayout PageLayout--panePos-start PageLayout--hasPaneDivider PageLayout--responsive-stackRegions PageLayout--responsive-panePos-start mt-3">
@@ -1160,6 +1170,7 @@ import {
         {param totalSymbols: $totalSymbols /}
         {param topPrimaryLanguages: $topPrimaryLanguages /}
         {param totalBazelVersions: $totalBazelVersions /}
+        {param totalBazelFlags: $totalBazelFlags /}
         {param uiCommitSha: $uiCommitSha /}
       {/call}
     </div>
@@ -1204,6 +1215,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="PageLayout PageLayout--panePos-start PageLayout--hasPaneDivider PageLayout--responsive-stackRegions PageLayout--responsive-panePos-start mt-3">
@@ -1219,6 +1231,7 @@ import {
       {param totalSymbols: $totalSymbols /}
       {param topPrimaryLanguages: $topPrimaryLanguages /}
       {param totalBazelVersions: $totalBazelVersions /}
+      {param totalBazelFlags: $totalBazelFlags /}
       {param uiCommitSha: $uiCommitSha /}
     {/call}
   </div>
@@ -1435,6 +1448,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="PageLayout PageLayout--panePos-start PageLayout--hasPaneDivider PageLayout--responsive-stackRegions PageLayout--responsive-panePos-start mt-3">
@@ -1450,6 +1464,7 @@ import {
         {param totalSymbols: $totalSymbols /}
         {param topPrimaryLanguages: $topPrimaryLanguages /}
         {param totalBazelVersions: $totalBazelVersions /}
+        {param totalBazelFlags: $totalBazelFlags /}
         {param uiCommitSha: $uiCommitSha /}
       {/call}
     </div>
@@ -3296,6 +3311,7 @@ import {
   {@param totalPeople: int}
   {@param totalSymbols: int}
   {@param totalBazelVersions: int}
+  {@param totalBazelFlags: int}
   {@param topPrimaryLanguages: list<[name: string, sanitizedName: string, count: int, percentage: number]>}
   {@param uiCommitSha: string}
 <div class="PageLayout PageLayout--panePos-start PageLayout--hasPaneDivider PageLayout--responsive-stackRegions PageLayout--responsive-panePos-start mt-3">
@@ -3311,6 +3327,7 @@ import {
         {param totalSymbols: $totalSymbols /}
         {param topPrimaryLanguages: $topPrimaryLanguages /}
         {param totalBazelVersions: $totalBazelVersions /}
+        {param totalBazelFlags: $totalBazelFlags /}
         {param uiCommitSha: $uiCommitSha /}
       {/call}
     </div>

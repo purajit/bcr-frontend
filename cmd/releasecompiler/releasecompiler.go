@@ -13,8 +13,10 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
+	bhpb "github.com/bazel-contrib/bcr-frontend/build/stack/bazel/help/v1"
 	bzpb "github.com/bazel-contrib/bcr-frontend/build/stack/bazel/registry/v1"
 	"github.com/bazel-contrib/bcr-frontend/pkg/paramsfile"
 	"google.golang.org/protobuf/proto"
@@ -120,6 +122,10 @@ func run(args []string) error {
 		assets = append(assets, asset)
 		log.Printf("Processed bazel flag db file: %s -> %s", asset.OriginalName, asset.HashedName)
 	}
+	flagCount, err := readBazelFlagCount(cfg.BazelFlagDbFile)
+	if err != nil {
+		return fmt.Errorf("failed to count bazel flags: %v", err)
+	}
 
 	// Emit manifest.pb.gz at the tarball root for the in-browser refresh
 	// poller. Must be appended AFTER every other asset's HashedName is
@@ -133,7 +139,7 @@ func run(args []string) error {
 	log.Printf("Processed manifest: %s (%d asset_hashes)", manifestAsset.OriginalName, len(assets)-1)
 
 	// Read and update index.html
-	indexContent, err := updateIndexHtml(cfg.IndexHtmlFile, assets)
+	indexContent, err := updateIndexHtml(cfg.IndexHtmlFile, assets, flagCount)
 	if err != nil {
 		return fmt.Errorf("failed to update index.html: %v", err)
 	}
@@ -217,10 +223,10 @@ func buildManifestAsset(registryPath string, assets []HashedAsset) (HashedAsset,
 	}
 
 	manifest := &bzpb.RegistryManifest{
-		CommitSha:    registry.GetCommitSha(),
-		CommitDate:   registry.GetCommitDate(),
-		Branch:       registry.GetBranch(),
-		AssetHashes:  map[string]string{},
+		CommitSha:   registry.GetCommitSha(),
+		CommitDate:  registry.GetCommitDate(),
+		Branch:      registry.GetBranch(),
+		AssetHashes: map[string]string{},
 	}
 	for _, a := range assets {
 		if a.OriginalName == a.HashedName {
@@ -362,6 +368,21 @@ func processBazelFlagDbFile(flagDbPath string) ([]HashedAsset, error) {
 	}, nil
 }
 
+func readBazelFlagCount(flagDbPath string) (int, error) {
+	if flagDbPath == "" {
+		return 0, nil
+	}
+	content, err := os.ReadFile(flagDbPath)
+	if err != nil {
+		return 0, fmt.Errorf("failed to read bazel flag db file: %v", err)
+	}
+	var db bhpb.BazelFlagDb
+	if err := proto.Unmarshal(content, &db); err != nil {
+		return 0, fmt.Errorf("failed to unmarshal bazel flag db: %v", err)
+	}
+	return len(db.GetFlag()), nil
+}
+
 func base64GzipEncode(data []byte) (string, error) {
 	var gzipBuf bytes.Buffer
 	gzipWriter := gzip.NewWriter(&gzipBuf)
@@ -427,7 +448,7 @@ func hashFilename(filename string, content []byte) string {
 	return fmt.Sprintf("%s.%s%s", baseName, hashStr, extensions)
 }
 
-func updateIndexHtml(indexPath string, assets []HashedAsset) ([]byte, error) {
+func updateIndexHtml(indexPath string, assets []HashedAsset, bazelFlagCount int) ([]byte, error) {
 	content, err := os.ReadFile(indexPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read index.html: %v", err)
@@ -444,6 +465,7 @@ func updateIndexHtml(indexPath string, assets []HashedAsset) ([]byte, error) {
 			log.Printf("Replaced {%s} with %s in index.html", asset.OriginalName, asset.HashedName)
 		}
 	}
+	htmlStr = strings.ReplaceAll(htmlStr, "{bazelflagdb.count}", strconv.Itoa(bazelFlagCount))
 
 	return []byte(htmlStr), nil
 }

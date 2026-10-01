@@ -84,6 +84,12 @@ class Application {
 	getBazelFlagDb() {}
 
 	/**
+	 * Returns the number of flags in the release's Bazel flag database.
+	 * @returns {number}
+	 */
+	getTotalBazelFlags() {}
+
+	/**
 	 * Returns the registry-data refresh poller. Settings UI reads/writes
 	 * its mode; the app listens to its CHANGE event to reveal the header
 	 * indicator and (in Auto mode) schedule a reload.

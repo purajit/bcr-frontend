@@ -126,6 +126,7 @@ class HomeOverviewSelectNav extends SelectNav {
 				totalSymbols: computeTotalSymbols(this.registry_),
 				topPrimaryLanguages: computeTopPrimaryLanguages(this.registry_, 10),
 				totalBazelVersions: computeTotalBazelVersions(this.registry_),
+				totalBazelFlags: getApplication(this).getTotalBazelFlags(),
 				uiCommitSha: uiCommitSha,
 			}),
 		);

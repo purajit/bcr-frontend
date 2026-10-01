@@ -18,7 +18,6 @@ const {
 	computeTotalSymbols,
 	createMaintainersMap,
 	createModuleMap,
-	refreshBcrSidePaneBazelFlags,
 	refreshBcrSidePaneSymbols,
 } = goog.require("bcrfrontend.registry");
 const {
@@ -239,6 +238,7 @@ class BazelFlagsListSelectNav extends SelectNav {
 				totalSymbols: computeTotalSymbols(this.registry_),
 				topPrimaryLanguages: computeTopPrimaryLanguages(this.registry_, 10),
 				totalBazelVersions: computeTotalBazelVersions(this.registry_),
+				totalBazelFlags: getApplication(this).getTotalBazelFlags(),
 				uiCommitSha: uiCommitSha,
 			}),
 		);
@@ -343,7 +343,6 @@ class BazelFlagsListSelectNav extends SelectNav {
 				setBadge(TabName.CATEGORIES, categorySet.size);
 				setBadge(TabName.TAGS, tagSet.size);
 				setBadge(TabName.COMMANDS, commandCount);
-				refreshBcrSidePaneBazelFlags(document.body, flagCount);
 			});
 	}
 }
@@ -405,10 +404,6 @@ class BazelFlagsListComponent extends Component {
 				if (this.isDisposed()) return;
 				this.db_ = /** @type {!BazelFlagDb} */ (db);
 				this.renderResults_();
-				refreshBcrSidePaneBazelFlags(
-					document.body,
-					this.db_.getFlagList().length,
-				);
 			})
 			.catch((err) => {
 				if (this.isDisposed()) return;
@@ -745,13 +740,13 @@ class BazelFlagsByTagComponent extends Component {
 					totalSymbols: computeTotalSymbols(this.registry_),
 					topPrimaryLanguages: computeTopPrimaryLanguages(this.registry_, 10),
 					totalBazelVersions: computeTotalBazelVersions(this.registry_),
+				totalBazelFlags: getApplication(this).getTotalBazelFlags(),
 					uiCommitSha: uiCommitSha,
 				});
 				root.appendChild(rendered);
 				installFlagGroupSearch(rendered, items, (input, listener) => {
 					this.getHandler().listen(input, events.EventType.INPUT, listener);
 				});
-				refreshBcrSidePaneBazelFlags(document.body, typed.getFlagList().length);
 			})
 			.catch((err) => {
 				if (this.isDisposed()) return;
@@ -829,6 +824,7 @@ class BazelFlagsByCommandComponent extends Component {
 						totalSymbols: computeTotalSymbols(this.registry_),
 						topPrimaryLanguages: computeTopPrimaryLanguages(this.registry_, 10),
 						totalBazelVersions: computeTotalBazelVersions(this.registry_),
+				totalBazelFlags: getApplication(this).getTotalBazelFlags(),
 						uiCommitSha: uiCommitSha,
 					});
 					root.appendChild(rendered);
@@ -856,13 +852,13 @@ class BazelFlagsByCommandComponent extends Component {
 					totalSymbols: computeTotalSymbols(this.registry_),
 					topPrimaryLanguages: computeTopPrimaryLanguages(this.registry_, 10),
 					totalBazelVersions: computeTotalBazelVersions(this.registry_),
+				totalBazelFlags: getApplication(this).getTotalBazelFlags(),
 					uiCommitSha: uiCommitSha,
 				});
 				root.appendChild(rendered);
 				installFlagGroupSearch(rendered, items, (input, listener) => {
 					this.getHandler().listen(input, events.EventType.INPUT, listener);
 				});
-				refreshBcrSidePaneBazelFlags(document.body, typed.getFlagList().length);
 			})
 			.catch((err) => {
 				if (this.isDisposed()) return;
@@ -946,13 +942,13 @@ class BazelFlagsByCategoryComponent extends Component {
 					totalSymbols: computeTotalSymbols(this.registry_),
 					topPrimaryLanguages: computeTopPrimaryLanguages(this.registry_, 10),
 					totalBazelVersions: computeTotalBazelVersions(this.registry_),
+				totalBazelFlags: getApplication(this).getTotalBazelFlags(),
 					uiCommitSha: uiCommitSha,
 				});
 				root.appendChild(rendered);
 				installFlagGroupSearch(rendered, items, (input, listener) => {
 					this.getHandler().listen(input, events.EventType.INPUT, listener);
 				});
-				refreshBcrSidePaneBazelFlags(document.body, typed.getFlagList().length);
 			})
 			.catch((err) => {
 				if (this.isDisposed()) return;
@@ -1086,7 +1082,6 @@ class BazelFlagDetailComponent extends Component {
 				if (this.isDisposed()) return;
 				const typed = /** @type {!BazelFlagDb} */ (db);
 				this.renderDetail_(typed);
-				refreshBcrSidePaneBazelFlags(document.body, typed.getFlagList().length);
 			})
 			.catch((err) => {
 				if (this.isDisposed()) return;
@@ -1151,6 +1146,7 @@ class BazelFlagDetailComponent extends Component {
 			totalSymbols: computeTotalSymbols(this.registry_),
 			topPrimaryLanguages: computeTopPrimaryLanguages(this.registry_, 10),
 			totalBazelVersions: computeTotalBazelVersions(this.registry_),
+				totalBazelFlags: getApplication(this).getTotalBazelFlags(),
 			uiCommitSha: uiCommitSha,
 		});
 		root.appendChild(rendered);

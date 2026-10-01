@@ -6,6 +6,7 @@ go_library(
     importpath = "github.com/bazel-contrib/bcr-frontend/cmd/releasecompiler",
     visibility = ["//visibility:private"],
     deps = [
+        "//build/stack/bazel/help/v1:help",
         "//build/stack/bazel/registry/v1:registry",
         "//pkg/paramsfile",
         "@org_golang_google_protobuf//proto",
